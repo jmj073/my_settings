@@ -39,13 +39,13 @@ echo "Neovim configuration applied."
 # 4. clangd 설정
 echo "[4/7] Configuring clangd..."
 if ! command -v clangd &> /dev/null; then
-    echo "clangd not found. Installing..."
-    sudo apt install -y clangd
+	    echo "clangd not found. Installing..."
+	        sudo apt install -y clangd
 fi
 
 # clangd symlink 보정 (버전별 이름 문제 방지)
 if [ ! -f /usr/bin/clangd ]; then
-    sudo ln -s $(which clangd-14 || which clangd-15 || which clangd-16) /usr/bin/clangd || true
+	    sudo ln -s $(which clangd-14 || which clangd-15 || which clangd-16) /usr/bin/clangd || true
 fi
 
 # Neovim LSP 설정 파일 (선택적)
@@ -58,10 +58,39 @@ if ok then
     cmd = { "clangd" },
     filetypes = { "c", "cpp", "objc", "objcpp" },
     root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git"),
+    on_attach = function(client, bufnr)
+      -- Key mappings for clangd LSP
+      local opts = { noremap=true, silent=true, buffer=bufnr }
+      
+      -- Go to definition
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      -- Go to declaration
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+      -- Show hover information
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      -- Go to implementation
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+      -- Show signature help
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+      -- Rename symbol
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+      -- Code action
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+      -- Find references
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      -- Format code
+      vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
+      -- Show diagnostics
+      vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+      -- Go to previous diagnostic
+      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+      -- Go to next diagnostic
+      vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+    end,
   }
 end
 EOF
-echo "clangd configured for Neovim."
+echo "clangd configured for Neovim with key bindings."
 
 # 5. Bash 프롬프트 (2줄 + 색상)
 echo "[5/7] Customizing colorful two-line Bash prompt..."
@@ -103,4 +132,3 @@ echo "======================================"
 echo "👉 Run 'tmux' to start a session."
 echo "👉 Run 'nvim' to launch Neovim."
 echo "👉 Run 'source ~/.bashrc' to apply the new prompt."
-
