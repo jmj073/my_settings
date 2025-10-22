@@ -111,7 +111,7 @@ echo "Colorful two-line prompt applied (reload with 'source ~/.bashrc')."
 # 6. Git 전역 설정
 echo "[6/7] Setting up Git global configuration..."
 git config --global alias.sts 'status -s'
-git config --global alias.graph 'log --oneline --graph'
+git config --global alias.graph 'log --oneline --graph --all'
 git config --global user.email 'wjsalswns0733@gmail.com'
 git config --global user.name 'jmj073'
 
