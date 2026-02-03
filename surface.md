@@ -229,3 +229,19 @@ sudo dnf install neovim
 ### chrome
 
 chrome은 브라우저에서 다운로드받아 설치한다.
+
+### 프롬프트
+
+`~/.bashrc`에 다음 코드를 추가한다.
+
+```bash
+if [ "$PS1" ]; then
+  GREEN="\[\033[0;32m\]"
+  BLUE="\[\033[0;34m\]"
+  GRAY="\[\033[0;37m\]"
+  RESET="\[\033[0m\]"
+
+  PS1="${GREEN}\u${RESET}@${BLUE}\h${RESET}:${GRAY}\w${GREEN}${RESET}\n$ "
+fi
+```
+
