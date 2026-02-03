@@ -73,6 +73,55 @@ sudo dnf install phosh phoc
 + `phosh`: 쉘
 + `phoc`: Wayland compositor
 
+### Phosh 키보드 설정
+
+phosh session으로 로그인하면 keyboard 활성화 하고, GNOME으로 로그인하면 keyboard를 비활성화한다.
+
+`~.config/autostart-scripts/keyboard-handler.sh`에 다음 내용을 입력해주자.
+
+```sh
+#!/bin/bash
+
+if [[ "$1" == "start" ]]; then
+    sleep 5
+
+    if pgrep -x "phosh" > /dev/null; then
+        gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true
+    else
+        gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false
+    fi
+elif [[ "$1" == "stop" ]]; then
+    gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false
+fi
+```
+
+`~/.config/systemd/user/keyboard-handler.service`에 다음 내용을 입력해주자.
+
+```ini
+[Unit]
+Description=Phosh Keyboard Toggle Handler
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/your_username/.config/autostart-scripts/keyboard-handler.sh start
+ExecStop=/home/your_username/.config/autostart-scripts/keyboard-handler.sh stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=graphical-session.target
+```
+
+이제 서비스를 활성화 시켜주자.
+
+```shell
+systemctl --user daemon-reload
+systemctl --user enable keyboard-handler.service
+```
+
+
+
 ## Waydroid 설치
 
 ### 설치
