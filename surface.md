@@ -120,8 +120,6 @@ systemctl --user daemon-reload
 systemctl --user enable keyboard-handler.service
 ```
 
-
-
 ## Waydroid 설치
 
 ### 설치
@@ -150,7 +148,24 @@ sudo waydroid shell -- sh -c "sqlite3 /data/data/*/*/gservices.db 'select value 
 
 ### Phosh 로그인할 때 시작하기
 
-TODO
+`~/.config/systemd/user/waydroid-phosh.service`에 다음 내용을 입력한다.
+
+```ini
+[Unit]
+Description=Start Waydroid when logging into Phosh
+After=graphical-session.target
+ConditionEnvironment=DESKTOP_SESSION=phosh
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/waydroid session start
+ExecStop=/usr/bin/waydroid session stop
+TimeoutStartSec=0
+
+[Install]
+WantedBy=graphical-session.target
+```
 
 ## 기타 설정
 
@@ -184,6 +199,8 @@ sudo dnf install gnome-tweaks
 
 `창 -> 제목 표시줄 단추`에서 "최대화"와 "최소화"를 켜준다.
 
+근데 다시 Phosh로 로그인하면 Phosh가 꺼버리는 경향이 있음. Phosh 로그인 했다가 다시 GNOME가면 버튼 사라져 있음.
+
 ### suspend
 
 phosh 사용할때 가끔씩 suspend 상태에서 혼자서 화면이 껐다 켜짐. 아직 못고침.
@@ -209,3 +226,6 @@ flatpak install flathub com.valvesoftware.Steam
 sudo dnf install neovim
 ```
 
+### chrome
+
+chrome은 브라우저에서 다운로드받아 설치한다.
