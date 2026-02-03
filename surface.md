@@ -217,7 +217,10 @@ steam은 flatpak으로 설치하자. flatpak이란, "리눅스용 앱 컨테이�
 ```shell
 sudo dnf install flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak remote-modify --enable flathub
 flatpak install flathub com.valvesoftware.Steam
+sudo flatpak override com.valvesoftware.Steam --device=all
+flatpak run com.valvesoftware.Steam
 ```
 
 ### neovim
@@ -241,7 +244,7 @@ if [ "$PS1" ]; then
   GRAY="\[\033[0;37m\]"
   RESET="\[\033[0m\]"
 
-  PS1="${GREEN}\u${RESET}@${BLUE}\h${RESET}:${GRAY}\w${GREEN}${RESET}\n$ "
+  PS1="${GREEN}	\u${RESET}@${BLUE}\h${RESET}:${GRAY}\w${GREEN}${RESET}\n$ "
 fi
 ```
 
