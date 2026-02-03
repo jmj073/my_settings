@@ -248,3 +248,19 @@ if [ "$PS1" ]; then
 fi
 ```
 
+### GRUB 안보이게
+
+`/etc/default/grub`에 다음 설정을 추가 및 수정.
+
+```
+GRUB_TIMEOUT=0
+GRUB_TIMEOUT_STYLE=hidden
+```
+
+그 다음 아래 명령중 첫 번째 명령을 실행하는데, 안된다면 두 번째 명령을 실행한다.
+
+```shell
+sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
