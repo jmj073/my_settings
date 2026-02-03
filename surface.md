@@ -2,7 +2,7 @@
 
 surface pro 7+를 세팅하기 위한 가이드이다. feature는 다음과 같다.
 
-+ **Fedora 42**: 42버전을 사용하는 이유는 아직 surface-linux fedora 43 커널이 waydroid에 필요한 binder_linux와 ashmem_linux를 지원하지 않기 때문이다.
++ **Fedora 43**: 43이 최신 버전이다.
 + **desktop environment**:
   + **GNOME**: 기본 DE다.
   + **phosh**: 모바일용 쉘이다. 해당 compositor로 접속하면 waydroid가 시작되고, 로그아웃하면 멈추게 세팅할것이다.
@@ -10,7 +10,7 @@ surface pro 7+를 세팅하기 위한 가이드이다. feature는 다음과 같�
 
 ## Fedora 부팅 USB 만들기
 
-[여기](https://fedoraproject.org/torrents/42/)에 접속하여 `Fedora-Workstation-Live-x86_64-42.torrent`를 받아준다. torrent 설치는 알아서 찾아보도록. fedora는 workstation, live(인터넷 설치가 아니라)를 설치해야 한다.
+[여기](https://www.fedoraproject.org/ko/workstation/download/)에 접속하여 x86_64용을 받아준다. fedora는 workstation, live(인터넷 설치가 아니라)를 설치해야 한다.
 
 USB를 컴퓨터에 꽂고 해당 USB 디바이스 파일에 대해 예를 들어 다음과 같이 명령어를 실행해준다. 참고로 `lsblk` 명령으로 USB 디바이스를 확인할 수 있다.
 
